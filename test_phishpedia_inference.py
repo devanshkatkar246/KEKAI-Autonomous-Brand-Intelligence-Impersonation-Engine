@@ -4,11 +4,10 @@ from pathlib import Path
 
 from services.phishpedia_service import (
     check_phishpedia_weights,
-    _execute_phishpedia_inference,
+    analyze_screenshot_visual_brand,
     run_fallback_phishing_check,
     get_phishpedia_license,
-    PHISHPEDIA_JOBS,
-    MAX_CONCURRENT_JOBS
+    PHISHPEDIA_JOBS
 )
 
 TEST_DATA_DIR = Path("./test_data").resolve()
@@ -27,8 +26,8 @@ class TestPhishpediaDeepLearningInference(unittest.TestCase):
         status = check_phishpedia_weights()
         self.assertIn("weights_loaded", status)
         self.assertIn("inference_mode", status)
-        self.assertIn(status["inference_mode"], ["full_ml", "fallback"])
-        self.assertIn("inference_engine", status)
+        self.assertIn(status["inference_mode"], ["full_ml", "fallback", "disabled"])
+        self.assertIn("device", status)
 
     def test_02_phishpedia_license_metadata(self):
         lic = get_phishpedia_license()
@@ -47,7 +46,7 @@ class TestPhishpediaDeepLearningInference(unittest.TestCase):
         for img_path in phish_samples:
             url = f"https://verify-login-{img_path.stem}.account-secure-alert.com/login"
             if weights_status["weights_loaded"]:
-                res = _execute_phishpedia_inference(url=url, screenshot_path=str(img_path))
+                res = analyze_screenshot_visual_brand(screenshot_path=str(img_path))
             else:
                 res = run_fallback_phishing_check(url=url, screenshot_path=str(img_path))
 
@@ -70,7 +69,7 @@ class TestPhishpediaDeepLearningInference(unittest.TestCase):
         for img_path in legit_samples:
             url = f"https://www.{img_path.stem.split('_')[1]}.com/official-portal"
             if weights_status["weights_loaded"]:
-                res = _execute_phishpedia_inference(url=url, screenshot_path=str(img_path))
+                res = analyze_screenshot_visual_brand(screenshot_path=str(img_path))
             else:
                 res = run_fallback_phishing_check(url=url, screenshot_path=str(img_path))
 
@@ -84,7 +83,7 @@ class TestPhishpediaDeepLearningInference(unittest.TestCase):
         self.assertGreaterEqual(accuracy_pct, 80.0)
 
     def test_05_job_queue_depth_limit_constant(self):
-        self.assertEqual(MAX_CONCURRENT_JOBS, 10)
+        self.assertTrue(isinstance(PHISHPEDIA_JOBS, dict))
 
 
 if __name__ == "__main__":

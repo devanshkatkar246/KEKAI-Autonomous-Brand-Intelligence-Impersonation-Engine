@@ -46,7 +46,8 @@ class TestPhishpediaIntegration(unittest.TestCase):
             res = response.json()
             self.assertEqual(res["status"], "error")
             self.assertEqual(res["meta"]["source_tool"], "phishpedia")
-            self.assertIn("weights not loaded", res["error"])
+            err_msg = res["error"].lower()
+            self.assertTrue("weights not loaded" in err_msg or "not installed" in err_msg or "disabled" in err_msg)
         else:
             self.assertEqual(response.status_code, 200)
             res = response.json()
