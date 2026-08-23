@@ -1,0 +1,42 @@
+{
+  "Rolex": {
+    "usd": 10000.0,
+    "inr": 1050000.0,
+    "note": "Rolex Submariner Date. India MRP includes 18% GST + import duty. Official Rolex India prices start at ~₹10.5L for Submariner."
+  },
+  "Apple": {
+    "usd": 999.0,
+    "inr": 89900.0,
+    "note": "Apple iPhone 15 base model India MRP. Apple India prices reflect GST and Apple's India pricing strategy, not FX conversion."
+  },
+  "Nike": {
+    "usd": 150.0,
+    "inr": 10295.0,
+    "note": "Nike Air Force 1 '07. Nike India official MSRP. Includes 18% GST."
+  },
+  "Louis Vuitton": {
+    "usd": 2500.0,
+    "inr": 305000.0,
+    "note": "LV Neverfull MM India retail price. LV India prices include customs duty + GST, significantly higher than FX-converted USD."
+  },
+  "Ray-Ban": {
+    "usd": 180.0,
+    "inr": 15490.0,
+    "note": "Ray-Ban Wayfarer Classic. EssilorLuxottica India official retail price including GST."
+  },
+  "Gucci": {
+    "usd": 1800.0,
+    "inr": 195000.0,
+    "note": "Gucci GG Marmont bag India retail. Includes import duty and 28% luxury GST bracket."
+  },
+  "Samsung": {
+    "usd": 899.0,
+    "inr": 74999.0,
+    "note": "Samsung Galaxy S24. Samsung India official launch price including GST."
+  },
+  "Sony": {
+    "usd": 399.0,
+    "inr": 34990.0,
+    "note": "Sony WH-1000XM5. Sony India official price. Sony maintains separate India pricing due to local manufacturing/import mix."
+  }
+}
