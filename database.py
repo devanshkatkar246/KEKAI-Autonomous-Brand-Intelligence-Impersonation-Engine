@@ -4,7 +4,8 @@ import os
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
-DB_PATH = Path("./brand_protection.db").resolve()
+DB_PATH = Path(os.getenv("DATABASE_PATH", "./brand_protection.db")).resolve()
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 
 def get_db_connection():

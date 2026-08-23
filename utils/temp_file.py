@@ -7,12 +7,16 @@ from pathlib import Path
 from typing import List, Generator
 from fastapi import UploadFile
 
-# Ensure /tmp working directory exists (handles Windows & Linux)
-TMP_DIR = Path("/tmp")
+# Ensure temp directory exists (configurable via TMP_DIR, handles Windows & Linux containers)
+ENV_TMP = os.getenv("TMP_DIR")
+if ENV_TMP:
+    TMP_DIR = Path(ENV_TMP).resolve()
+else:
+    TMP_DIR = Path("/tmp") if Path("/tmp").exists() else Path("./tmp").resolve()
+
 try:
     TMP_DIR.mkdir(parents=True, exist_ok=True)
 except Exception:
-    # Fallback to current working directory /tmp if system root /tmp is disallowed
     TMP_DIR = Path("./tmp").resolve()
     TMP_DIR.mkdir(parents=True, exist_ok=True)
 

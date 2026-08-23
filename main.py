@@ -34,16 +34,30 @@ app = FastAPI(
     version="1.0.0"
 )
 
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:5173,http://127.0.0.1:3000,http://127.0.0.1:5173").split(",")
+FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "")
+RAW_ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:5173,http://127.0.0.1:3000,http://127.0.0.1:5173")
+if FRONTEND_ORIGIN:
+    RAW_ALLOWED_ORIGINS = f"{FRONTEND_ORIGIN},{RAW_ALLOWED_ORIGINS}"
+
+ALLOWED_ORIGINS = [o.strip() for o in RAW_ALLOWED_ORIGINS.split(",") if o.strip()]
 
 # Enable CORS for React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[o.strip() for o in ALLOWED_ORIGINS if o.strip()],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/health", status_code=status.HTTP_200_OK)
+async def health_check():
+    """
+    Lightweight health check endpoint for deployment monitoring.
+    Returns status: ok without triggering scans, external network calls, or secret exposure.
+    """
+    return {"status": "ok"}
 
 
 # Exception handler for custom response shape on HTTP errors

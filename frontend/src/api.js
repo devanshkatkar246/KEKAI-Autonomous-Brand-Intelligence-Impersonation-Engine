@@ -13,12 +13,15 @@ const DEFAULT_TIMEOUT_MS = 10000;   // 10 s per attempt
 const RETRY_ATTEMPTS     = 2;       // 1 initial + 1 retry
 const RETRY_BACKOFF_MS   = 800;
 
+export const API_BASE_URL = (import.meta.env && import.meta.env.VITE_API_BASE_URL) ? import.meta.env.VITE_API_BASE_URL : '';
+
 /** Low-level fetch with AbortController timeout. */
 export async function fetchWithTimeout(url, options = {}, timeoutMs = DEFAULT_TIMEOUT_MS) {
+  const fullUrl = (url.startsWith('/') && API_BASE_URL) ? `${API_BASE_URL}${url}` : url;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const response = await fetch(url, { ...options, signal: controller.signal });
+    const response = await fetch(fullUrl, { ...options, signal: controller.signal });
     return response;
   } catch (err) {
     // Normalise AbortError and TypeError into a single NetworkError shape
