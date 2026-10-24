@@ -17,6 +17,7 @@ import {
   Radio,
   ExternalLink,
   Plus,
+  X,
 } from 'lucide-react';
 import CandidateEvidenceCardV2 from './CandidateEvidenceCardV2';
 import TechnicalEvidenceModalV2 from './TechnicalEvidenceModalV2';

@@ -145,9 +145,8 @@ const OnboardingPage = ({ onStartInvestigation, addToast }) => {
                         if (domainError) setDomainError('');
                       }}
                       placeholder="Enter official domain (e.g. amazon.com)"
-                      className={`w-full px-4 py-2.5 bg-surface rounded-lg border font-technical-data text-on-background focus:ring-2 focus:ring-primary/20 outline-none transition-all ${
-                        domainError ? 'border-error focus:border-error' : 'border-outline-variant focus:border-primary'
-                      }`}
+                      className={`w-full px-4 py-2.5 bg-surface rounded-lg border font-technical-data text-on-background focus:ring-2 focus:ring-primary/20 outline-none transition-all ${domainError ? 'border-error focus:border-error' : 'border-outline-variant focus:border-primary'
+                        }`}
                     />
                     <Globe size={16} className="absolute right-3 top-3 text-on-surface-variant opacity-50" />
                   </div>

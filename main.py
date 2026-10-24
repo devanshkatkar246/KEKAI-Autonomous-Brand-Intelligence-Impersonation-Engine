@@ -1052,19 +1052,8 @@ async def visual_phishing_check(
     use_fallback = False
 
     if not status_info["weights_loaded"]:
-        if not fallback:
-            logger.warning("POST /api/visual-phishing-check — 503 weights not loaded, fallback not requested")
-            return JSONResponse(
-                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                content={
-                    "status": "error",
-                    "data": status_info,
-                    "error": status_info["message"],
-                    "meta": {"source_tool": "phishpedia"}
-                }
-            )
-        else:
-            use_fallback = True
+        use_fallback = True
+        logger.info("POST /api/visual-phishing-check — PyTorch model weights missing, automatically running in visual fallback mode")
 
     # Save uploaded screenshot to temp file in /tmp
     from utils.temp_file import TMP_DIR

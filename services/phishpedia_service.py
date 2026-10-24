@@ -113,7 +113,10 @@ async def process_phishpedia_job(job_id: str, url: str, screenshot_path: str, us
     try:
         PHISHPEDIA_JOBS[job_id] = PHISHPEDIA_JOBS.get(job_id, {})
         PHISHPEDIA_JOBS[job_id]["status"] = "processing"
-        res = analyze_screenshot_visual_brand(screenshot_path)
+        if use_fallback:
+            res = run_fallback_phishing_check(url, screenshot_path)
+        else:
+            res = analyze_screenshot_visual_brand(screenshot_path)
         PHISHPEDIA_JOBS[job_id]["status"] = "completed"
         PHISHPEDIA_JOBS[job_id]["result"] = res
     except Exception as e:

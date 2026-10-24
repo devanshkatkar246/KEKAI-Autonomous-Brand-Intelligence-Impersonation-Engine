@@ -679,7 +679,7 @@ function Dashboard() {
             <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4 text-xs">
               <div className="flex items-center gap-2 text-[#c2410c] font-semibold">
                 <span className="material-symbols-outlined text-[16px]">wifi_off</span>
-                <span>Backend Unreachable &mdash; Cannot connect to http://localhost:8000. Auto-retrying...</span>
+                <span>Backend Unreachable &mdash; Cannot connect to API server. Auto-retrying...</span>
               </div>
               <button
                 onClick={checkHealth}
